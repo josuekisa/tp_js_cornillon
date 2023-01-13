@@ -1,4 +1,4 @@
-@import './common.css';
+
 @import './header.css';
 @import './nav.css';
 @import './sections.css';
@@ -6,36 +6,31 @@
 @import url('/node_modules/bootstrap/dist/css/bootstrap.min.css');
 @import url('/node_modules/bootstrap/');
 
-.html{
-    background-color:beige;
 
+:root {
+  --color-primary: #ff6347;
+  scroll-behavior: smooth;
 }
 
-header{
-    display:flex;
-    background-color:salmon;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f1f0e6;
+  font-family: sans-serif;
+  line-height: 30px;
+  color: #444;
+  height: 100%;
 }
 
-header img {
-    width: 100px;
-    margin-top: 10px;
-    margin-left: 10px;
-  }
-
-nav{
-   margin-left: 10px;
+h1, h2 {
+  color: var(--color-primary);
+  text-align: center;
 }
 
-nav ul li {
-    display: inline-block;
-    
-    width: 110px;
-    text-align: center;
-  }
-  
-  nav ul a {
-    margin-right: 60px;
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
+a {
+  text-decoration: none;
+  color: #444;
+}
+
+
+

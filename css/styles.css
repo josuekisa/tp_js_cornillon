@@ -1,0 +1,41 @@
+@import './common.css';
+@import './header.css';
+@import './nav.css';
+@import './sections.css';
+@import './footer.css';
+@import url('/node_modules/bootstrap/dist/css/bootstrap.min.css');
+@import url('/node_modules/bootstrap/');
+
+.html{
+    background-color:beige;
+
+}
+
+header{
+    display:flex;
+    background-color:salmon;
+}
+
+header img {
+    width: 100px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+
+nav{
+   margin-left: 10px;
+}
+
+nav ul li {
+    display: inline-block;
+    
+    width: 110px;
+    text-align: center;
+  }
+  
+  nav ul a {
+    margin-right: 60px;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }

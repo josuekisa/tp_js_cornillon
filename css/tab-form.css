@@ -1,0 +1,31 @@
+::placeholder{
+    font-size: 0.7rem;
+}
+
+form{
+margin-top: 100px;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 250px;
+  margin: auto;
+  padding: 10px;
+  box-shadow: 1px 1px 2px #000;
+  border-radius: 10px;
+}
+
+form > * {
+
+    margin-bottom: 10px;
+
+}
+
+form > [type="submit"] {
+    cursor: pointer;
+    width: 50%;
+    align-self: center;
+    padding: 4px;
+  }
+  
+  textarea {
+    resize: none;
+  }

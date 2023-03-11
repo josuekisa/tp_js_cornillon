@@ -1,0 +1,9 @@
+@import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import url('/css/footer.css');
+@import url('/css/header.css');
+@import url('/css/tab-form.css');
+
+
+body{
+    background-color: rgb(228, 165, 158);
+}

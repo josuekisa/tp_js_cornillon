@@ -1,4 +1,29 @@
-button{
-    margin-right :7px; 
+
+.btn-edit{
+    padding :10px; 
+    padding-bottom:10px ;
+    margin-right: 7px;
     margin-bottom: 7px;
+    border-radius: 10px;
+    border-style:hidden;
+}
+
+
+.btn-del{
+    padding :10px; 
+    padding-bottom:10px ;
+    margin-right: 7px;
+    margin-bottom: 7px;
+    border-radius: 10px;
+    border-style:hidden;
+    
+}
+
+.btn-vld{
+    padding :10px; 
+    padding-bottom:10px ;
+    margin-right: 7px;
+    margin-bottom: 7px;
+    border-radius: 10px;
+    border-style:hidden;
 }

@@ -12,7 +12,7 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (editingIndex === null) {
+    if (editingIndex === null ) {
       // Add new task
       setTaskData(
         taskData.concat({
@@ -29,28 +29,31 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
       setCurrentTask('');
       setEditingIndex(null);
     }
-  };
+    
+  }; 
 
   
   const handleEdit = (index) => {
     setEditingIndex(index);
     setCurrentTask(taskData[index].text);
-    saveTaskToLocalStorage()
+    saveTaskToLocalStorage(taskData);
   };
 
   const handleDelete = (index) => {
     setTaskData(taskData.filter((_, i) => i !== index));
-    saveTaskToLocalStorage()
+    saveTaskToLocalStorage(taskData);
   };
 
   const handleComplete = (index) => {
     const newTaskData = [...taskData];
     newTaskData[index].completed = !newTaskData[index].completed;
     setTaskData(newTaskData);
-    saveTaskToLocalStorage()
+    saveTaskToLocalStorage(taskData);
   };
 
 
+
+  
   return (
     <div className="m-auto px-4 col-12 col-sm-10 col-lg-6">
       <form onSubmit={handleSubmit} className="mb-3">
@@ -64,7 +67,7 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
             onChange={(e) => setCurrentTask(e.target.value)}
           />
         </label>
-        <button type="submit" className="ml-2 btn btn-primary d-block">
+        <button type="submit" className="mt-2 btn btn-primary d-block">
           {editingIndex === null ? 'Créer' : 'Modifier'}
         </button>
         {editingIndex !== null && (
@@ -72,6 +75,7 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
             type="button"
             className="ml-2 btn btn-secondary d-block"
             onClick={() => setEditingIndex(null)}
+         
           >
             Annuler
           </button>
@@ -106,7 +110,7 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
             ) : (
               <>
                 {!task.completed && (
-                  <button
+                  <button class="btn-edit"
                     type=
                      "button"
                 onClick={() => handleEdit(index)}
@@ -114,13 +118,13 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
                 🖊️
               </button>
             )}
-            <button
+            <button class="btn-del"
               type="button"
               onClick={() => handleDelete(index)}
             >
               ❌
             </button>
-            <button
+            <button class="btn-vld"
               type="button"
               onClick={() => handleComplete(index)}
             >

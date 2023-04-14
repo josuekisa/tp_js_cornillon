@@ -1,77 +1,145 @@
-import React, { useState } from 'react';
+/* TODO List V1*/
+
+import React, { useState , useEffect} from 'react';
+
+
 
 const Form = () => {
-  const [taskData, setTaskData] = useState([]);
+  const [todos, setTodos] = useState([]);
+  
   const [currentTask, setCurrentTask] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
-  const saveTaskToLocalStorage = (taskData)=> {
-localStorage.setItem('taskData', JSON.stringify(taskData));
 
-  };
+  const [searchItem, setSearchItem] = useState('');
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (editingIndex === null ) {
       // Add new task
-      setTaskData(
-        taskData.concat({
+      let uniqueId =new Date().getTime().toString(36) + new Date().getUTCMilliseconds();
+      setTodos(
+        todos.concat({
+          id: uniqueId,
           text: currentTask,
           completed: false,
         })
       );
       setCurrentTask('');
+     
     } else {
       // Edit existing task
-      const newTaskData = [...taskData];
+      const newTaskData = [...todos];
       newTaskData[editingIndex].text = currentTask;
-      setTaskData(newTaskData);
+      setTodos(newTaskData);
       setCurrentTask('');
       setEditingIndex(null);
+
+    
     }
     
   }; 
-
+  
   
   const handleEdit = (index) => {
     setEditingIndex(index);
-    setCurrentTask(taskData[index].text);
-    saveTaskToLocalStorage(taskData);
+    setCurrentTask(todos[index].text);
+ 
   };
-
+  
+  
   const handleDelete = (index) => {
-    setTaskData(taskData.filter((_, i) => i !== index));
-    saveTaskToLocalStorage(taskData);
+    setTodos(todos.filter((_, i) => i !== index));
+    
+   
   };
 
+  
   const handleComplete = (index) => {
-    const newTaskData = [...taskData];
+    const newTaskData = [...todos];
     newTaskData[index].completed = !newTaskData[index].completed;
-    setTaskData(newTaskData);
-    saveTaskToLocalStorage(taskData);
+    setTodos(newTaskData);
+    
   };
 
+  
+
+	useEffect(() => {
+		const todos = JSON.parse(localStorage.getItem('todos'));
+		if (todos && window.location.reload) {
+			setTodos(todos);
+      
+		}
+   
+	}, [], console.table(todos));
+
+	/*useEffect(() => {
+		let adderror = setTimeout(() => {
+			setError(false);
+		}, 2000);
+		return () => {
+			clearTimeout(adderror);
+		};
+	}, [error]);*/
+
+	useEffect(() => {
+		localStorage.setItem('todos', JSON.stringify(todos));
+	}, [todos], console.table(todos));
+
+  /*const person = { firstName: 'Robin', lastName: 'Wieruch' };
+
+  localStorage.setItem('user', JSON.stringify(person));
+  
+  const stringifiedPerson = localStorage.getItem('user');
+  const personAsObjectAgain = JSON.parse(stringifiedPerson);*/
+  
 
 
   
+	/*useEffect(() => {
+		let adderror = setTimeout(() => {
+			setError(false);
+		}, 2000);
+		return () => {
+			clearTimeout(adderror);
+		};
+	}, [error]);*/
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    setSearchItem(event.target.value);
+  };
+
+ 
+  
+
+
+  
+
   return (
     <div className="m-auto px-4 col-12 col-sm-10 col-lg-6">
-      <form onSubmit={handleSubmit} className="mb-3">
-        <label htmlFor="todo" className="form-label mt-3">
+      <form onSubmit={handleSubmit} className="form-row align-items-center mb-3">
+        <label id='todo'htmlFor="todo" className="form-label mt-3">
           Chose a faire
           <input
             type="text"
-            className="form-control"
+            className="form-control mb-2"
             id="todo"
             value={currentTask}
             onChange={(e) => setCurrentTask(e.target.value)}
+            placeholder='Entrer une tâche'
           />
+          
         </label>
-        <button type="submit" className="mt-2 btn btn-primary d-block">
+        <button id='btn-create'type="submit" class="mt-2 btn d-block">
           {editingIndex === null ? 'Créer' : 'Modifier'}
         </button>
         {editingIndex !== null && (
-          <button id='button-del'
+         
+        
+        <button id='button-del'
             type="button"
             className="ml-2 btn btn-secondary d-block"
             onClick={() => setEditingIndex(null)}
@@ -80,11 +148,21 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
             Annuler
           </button>
         )}
+        
       </form>
+      <form onSubmit={handleSearch}   >
+      <input type="text"
+          placeholder="Recherche de tâche"
+          value={searchItem}
+          onChange={handleSearch} />
+      <button id='btn-search' type="submit" class="mt-2 btn d-block">
+           Recherche de Tâche
+        </button>
+        </form>
 
       <h2>Liste des choses a faire:</h2>
       <ul className="list-group">
-        {taskData.map((task, index) => (
+        {todos.map((task, index) => (
           <li
             key={index}
             className={`d-flex align-items-center ${
@@ -118,7 +196,7 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
                 🖊️
               </button>
             )}
-            <button class="btn-del"
+            <button class="btn-del "
               type="button"
               onClick={() => handleDelete(index)}
             >
@@ -128,13 +206,26 @@ localStorage.setItem('taskData', JSON.stringify(taskData));
               type="button"
               onClick={() => handleComplete(index)}
             >
-              {task.completed ? 'Non validée' : '✅'}
+              {task.completed  ? 'Non validée' : '✅'}
             </button>
           </>
         )}
       </li>
     ))}
   </ul>
+  <div>
+    <button id='btn-save'class='mt-2 btn  '
+    
+   
+    >
+      Sauvegarder Liste
+    </button>
+    <button onClick={() => window.location.reload()}>Actualiser</button>
+    <button onClick={() => alert(JSON.stringify(todos))}>Afficher tâches</button>
+    <button onClick={() => console.log(localStorage)}>Afficher localStorage</button>
+        <button onClick={() => console.log(todos)}>Afficher tasks</button>
+ 
+  </div>
 </div>
 );
 };

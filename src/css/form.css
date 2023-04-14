@@ -1,29 +1,83 @@
 
+ #todo{
+ 
+ }
+#btn-create {
+
+    background-color: rgb(224, 185, 134);
+    color:rgb(110, 40, 40);
+   border-radius: 10px;
+   animation: backInLeft;
+   animation-duration: 2s; /* don't forget to set a duration! */
+}
 .btn-edit{
+    background-color: beige;
     padding :10px; 
     padding-bottom:10px ;
     margin-right: 7px;
     margin-bottom: 7px;
     border-radius: 10px;
     border-style:hidden;
+    animation: bounceInRight;
+   animation-duration: 1s; /* don't forget to set a duration! */
+  
 }
 
 
 .btn-del{
+    background-color: beige;
     padding :10px; 
     padding-bottom:10px ;
     margin-right: 7px;
     margin-bottom: 7px;
     border-radius: 10px;
     border-style:hidden;
+    animation: bounceInRight;
+   animation-duration: 2s; /* don't forget to set a duration! */
+
+   
     
 }
 
 .btn-vld{
+    background-color: beige;
     padding :10px; 
     padding-bottom:10px ;
     margin-right: 7px;
     margin-bottom: 7px;
     border-radius: 10px;
     border-style:hidden;
+    animation: bounceInRight;
+   animation-duration: 3s; /* don't forget to set a duration! */
+}
+
+#btn-save{
+   background-color: rgb(224, 185, 134);
+    color:rgb(110, 40, 40);
+   border-radius: 10px;
+   animation: backInUp;
+   animation-duration: 2s; /* don't forget to set a duration! */
+
+}
+
+#btn-search{
+    display:inline;
+    background-color: rgb(224, 185, 134);
+    color:rgb(110, 40, 40);
+   border-radius: 10px;
+   animation: backInRight;
+   animation-duration: 2s; /* don't forget to set a duration! */
+}
+
+
+span{
+    background-color:beige;
+    padding :10px; 
+    padding-bottom:7px ;
+     margin-right: 7px;
+     margin-bottom: 7px;
+    border-radius: 10px;
+    border-style:hidden;
+    animation: lightSpeedInRight;
+    animation-duration: 1s;
 }

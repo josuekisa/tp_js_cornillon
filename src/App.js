@@ -10,7 +10,7 @@ function App() {
   
   return (
     <div className="App">
-     <h1 className="text-center">Todo List</h1>
+     <h1 className="text-center">To do List</h1>
      <Form/>
     </div>
 

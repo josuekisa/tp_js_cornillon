@@ -1,6 +1,13 @@
 /* TODO List V1*/
 
 import React, { useState , useEffect} from 'react';
+import { IoIosCheckmarkCircle } from 'react-icons/io';
+import { FiCircle } from 'react-icons/fi';
+import { FaEdit} from 'react-icons/fa';
+import { RiDeleteBin5Line} from 'react-icons/ri';
+
+//import { SelectButton } from 'primereact/selectbutton';
+        
 
 
 
@@ -9,8 +16,40 @@ const Form = () => {
   
   const [currentTask, setCurrentTask] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
-
+  const [filterStatus, setFilterStatus] = useState('all');
   const [searchItem, setSearchItem] = useState('');
+  const [showCompleted, setShowCompleted] = useState(false);
+
+ 
+ 
+  const handleUpdateFilter= (event)=>{
+    console.log('updating')
+    setFilterStatus(event.target.value)
+
+  }; 
+
+
+  const handleShowCompleted = () => {
+    setShowCompleted(!showCompleted);
+  };
+
+
+
+  const filterTasks = (tasks, filterStatus) => {
+    switch (filterStatus) {
+      case 'completed':
+        return showCompleted ? tasks.filter(task => task.completed) : [];
+      case 'incomplete':
+        return tasks.filter(task => !task.completed);
+      default:
+        return tasks;
+    }
+  };
+
+
+
+const filteredTasks = filterTasks(todos, filterStatus);
+
 
 
 
@@ -66,52 +105,22 @@ const Form = () => {
 
   
 
-	useEffect(() => {
-		const todos = JSON.parse(localStorage.getItem('todos'));
-		if (todos && window.location.reload) {
-			setTodos(todos);
-      
-		}
-   
-	}, [], console.table(todos));
-
-	/*useEffect(() => {
-		let adderror = setTimeout(() => {
-			setError(false);
-		}, 2000);
-		return () => {
-			clearTimeout(adderror);
-		};
-	}, [error]);*/
-
-	useEffect(() => {
-		localStorage.setItem('todos', JSON.stringify(todos));
-	}, [todos], console.table(todos));
-
-  /*const person = { firstName: 'Robin', lastName: 'Wieruch' };
-
-  localStorage.setItem('user', JSON.stringify(person));
-  
-  const stringifiedPerson = localStorage.getItem('user');
-  const personAsObjectAgain = JSON.parse(stringifiedPerson);*/
-  
-
-
-  
-	/*useEffect(() => {
-		let adderror = setTimeout(() => {
-			setError(false);
-		}, 2000);
-		return () => {
-			clearTimeout(adderror);
-		};
-	}, [error]);*/
+	
 
   const handleSearch = (event) => {
     event.preventDefault();
     setSearchItem(event.target.value);
   };
+  useEffect(() => {
+		const data = JSON.parse(localStorage.getItem('todos'));
+		if (data) {
+			setTodos(data);
+		}
+	}, []);
 
+  useEffect(() => {
+		localStorage.setItem('todos', JSON.stringify(todos));
+	}, [todos]);
  
   
 
@@ -123,7 +132,7 @@ const Form = () => {
       <form onSubmit={handleSubmit} className="form-row align-items-center mb-3">
         <label id='todo'htmlFor="todo" className="form-label mt-3">
           Chose a faire
-          <input
+          <input 
             type="text"
             className="form-control mb-2"
             id="todo"
@@ -136,8 +145,13 @@ const Form = () => {
         <button id='btn-create'type="submit" class="mt-2 btn d-block">
           {editingIndex === null ? 'Créer' : 'Modifier'}
         </button>
+        <select id='status' value={filterStatus} onChange={handleUpdateFilter}>
+          <option value="all">Toutes les tâches</option>
+          <option value="completed">Complet</option>
+          <option value="incomplete">Incomplet  </option>
+        </select>
         {editingIndex !== null && (
-         
+          
         
         <button id='button-del'
             type="button"
@@ -145,7 +159,7 @@ const Form = () => {
             onClick={() => setEditingIndex(null)}
          
           >
-            Annuler
+            Annuler         
           </button>
         )}
         
@@ -159,14 +173,19 @@ const Form = () => {
            Recherche de Tâche
         </button>
         </form>
+        
+        <button onClick={handleShowCompleted}>
+  {showCompleted ? 'Masquer les tâches terminées' : 'Voir les tâches terminées'}
+</button>
 
+        
       <h2>Liste des choses a faire:</h2>
       <ul className="list-group">
-        {todos.map((task, index) => (
+        {filteredTasks.map((todos, index) => (
           <li
             key={index}
             className={`d-flex align-items-center ${
-              task.completed ? 'text-muted' : ''
+              todos.completed ? 'text-muted' : ''
             }`}
           >
             {editingIndex === index ? (
@@ -179,7 +198,7 @@ const Form = () => {
                 />
               </form>
             ) : (
-              <span className="flex-grow-1">{task.text}</span>
+              <span className="flex-grow-1">{todos.text}</span>
             )}
             {editingIndex === index ? (
               <button type="button" onClick={() => setEditingIndex(null)}>
@@ -187,45 +206,33 @@ const Form = () => {
               </button>
             ) : (
               <>
-                {!task.completed && (
+                {!todos.completed && (
                   <button class="btn-edit"
                     type=
                      "button"
                 onClick={() => handleEdit(index)}
               >
-                🖊️
+                <FaEdit className='icone-edit'/>
               </button>
             )}
             <button class="btn-del "
               type="button"
               onClick={() => handleDelete(index)}
             >
-              ❌
+              <RiDeleteBin5Line className='icon-delete'/>
             </button>
             <button class="btn-vld"
               type="button"
               onClick={() => handleComplete(index)}
             >
-              {task.completed  ? 'Non validée' : '✅'}
+              {!todos.completed  ? (<FiCircle/>):(<IoIosCheckmarkCircle className={todos.completed ? 'icone-done' : ''}/>)/*'Non validée' : '✅'*/}
             </button>
           </>
         )}
       </li>
     ))}
   </ul>
-  <div>
-    <button id='btn-save'class='mt-2 btn  '
-    
-   
-    >
-      Sauvegarder Liste
-    </button>
-    <button onClick={() => window.location.reload()}>Actualiser</button>
-    <button onClick={() => alert(JSON.stringify(todos))}>Afficher tâches</button>
-    <button onClick={() => console.log(localStorage)}>Afficher localStorage</button>
-        <button onClick={() => console.log(todos)}>Afficher tasks</button>
  
-  </div>
 </div>
 );
 };

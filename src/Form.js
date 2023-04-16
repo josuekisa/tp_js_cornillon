@@ -111,6 +111,10 @@ const filteredTasks = filterTasks(todos, filterStatus);
     event.preventDefault();
     setSearchItem(event.target.value);
   };
+
+ 
+
+
   useEffect(() => {
 		const data = JSON.parse(localStorage.getItem('todos'));
 		if (data) {
@@ -123,15 +127,20 @@ const filteredTasks = filterTasks(todos, filterStatus);
 	}, [todos]);
  
   
-
+  let Today = new Date().toLocaleDateString('fr-fr', { weekday: 'long' });
+	let day = new Date().toLocaleDateString('fr-fr', { day: 'numeric' });
+	let month = new Date().toLocaleDateString('fr-fr', { month: 'long' });
 
   
 
   return (
     <div className="m-auto px-4 col-12 col-sm-10 col-lg-6">
       <form onSubmit={handleSubmit} className="form-row align-items-center mb-3">
+        
+      <h4 className="date">
+					<div>{`${Today},`} {`${day} ${month}`}</div>
+          </h4>
         <label id='todo'htmlFor="todo" className="form-label mt-3">
-          Chose a faire
           <input 
             type="text"
             className="form-control mb-2"

@@ -1,35 +1,30 @@
 
  #todo{
-    display: block;
+    display:block;
     margin-bottom: 5px;
     width: 100%;
   padding: 10px;
   outline: none;
   border-radius: 5px;
-  transition: all .5s ease-in-out;
+  
  
  }
 
- .date{
-    display:inline-flex;
-    font-size: 22px;
+   .date   {
+    margin-top: 70px;
     margin-left: 10px;
-    margin-top: 10px;
-  }
-
-   .date div {
-    margin-top: 10px;
+    position:relative;
   }
 #btn-create {
 
     
-    color:rgb(110, 40, 40);
+    color:rgb(0, 0, 0);
    border-radius: 10px;
    animation: backInLeft;
    animation-duration: 2s; /* don't forget to set a duration! */
 }
 .btn-edit{
-    
+  background-color: rgb(255, 255, 255); 
     padding :10px; 
     padding-bottom:10px ;
     margin-right: 7px;
@@ -43,7 +38,7 @@
 
 
 .btn-del{
-    
+  background-color: rgb(255, 255, 255); 
     padding :10px; 
     padding-bottom:10px ;
     margin-right: 7px;
@@ -52,13 +47,15 @@
     border-style:hidden;
     animation: bounceInRight;
    animation-duration: 2s; /* don't forget to set a duration! */
+   color: rgb(255, 0, 0);
 
    
     
 }
 
-.btn-vld{
-    
+
+.btn-vld {
+    background-color: rgb(255, 255, 255); 
     padding :10px; 
     padding-bottom:10px ;
     margin-right: 7px;
@@ -67,25 +64,12 @@
     border-style:hidden;
     animation: bounceInRight;
    animation-duration: 3s; /* don't forget to set a duration! */
+   color: green;
 }
 
-/*#btn-save{
-   background-color: rgb(224, 185, 134);
-    color:rgb(110, 40, 40);
-   border-radius: 10px;
-   animation: backInUp;
-   animation-duration: 2s; /* don't forget to set a duration! 
 
-}*/
 
-#btn-search{
-    display:inline;
-    background-color: rgb(224, 185, 134);
-    color:rgb(110, 40, 40);
-   border-radius: 10px;
-   animation: backInRight;
-   animation-duration: 2s; /* don't forget to set a duration! */
-}
+
 
 
 span{
@@ -96,12 +80,17 @@ span{
      margin-bottom: 7px;
     border-radius: 10px;
     border-style:hidden;
-    border: solid #38D08A;
+    
+    
     animation: lightSpeedInRight;
     animation-duration: 1s;
    
 }
 
-.icone-delete{
-    background-color: red;
+
+
+#status{
+display:inline-block;
+    margin-left: 80%;
 }
+

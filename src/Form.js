@@ -5,9 +5,11 @@ import { IoIosCheckmarkCircle } from 'react-icons/io';
 import { FiCircle } from 'react-icons/fi';
 import { FaEdit} from 'react-icons/fa';
 import { RiDeleteBin5Line} from 'react-icons/ri';
+import {BiUndo } from 'react-icons/bi';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-//import { SelectButton } from 'primereact/selectbutton';
-        
+
+
 
 
 
@@ -17,28 +19,22 @@ const Form = () => {
   const [currentTask, setCurrentTask] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const [filterStatus, setFilterStatus] = useState('all');
-  const [searchItem, setSearchItem] = useState('');
-  const [showCompleted, setShowCompleted] = useState(false);
+ 
 
- 
- 
-  const handleUpdateFilter= (event)=>{
+    const handleUpdateFilter= (event)=>{
     console.log('updating')
     setFilterStatus(event.target.value)
 
   }; 
 
 
-  const handleShowCompleted = () => {
-    setShowCompleted(!showCompleted);
-  };
-
+ 
 
 
   const filterTasks = (tasks, filterStatus) => {
     switch (filterStatus) {
       case 'completed':
-        return showCompleted ? tasks.filter(task => task.completed) : [];
+        return  tasks.filter(task => task.completed) ;
       case 'incomplete':
         return tasks.filter(task => !task.completed);
       default:
@@ -57,7 +53,7 @@ const filteredTasks = filterTasks(todos, filterStatus);
     event.preventDefault();
 
     if (editingIndex === null ) {
-      // Add new task
+      // ajout d'une tâche
       let uniqueId =new Date().getTime().toString(36) + new Date().getUTCMilliseconds();
       setTodos(
         todos.concat({
@@ -69,7 +65,7 @@ const filteredTasks = filterTasks(todos, filterStatus);
       setCurrentTask('');
      
     } else {
-      // Edit existing task
+      // editer une tâche
       const newTaskData = [...todos];
       newTaskData[editingIndex].text = currentTask;
       setTodos(newTaskData);
@@ -104,17 +100,7 @@ const filteredTasks = filterTasks(todos, filterStatus);
   };
 
   
-
-	
-
-  const handleSearch = (event) => {
-    event.preventDefault();
-    setSearchItem(event.target.value);
-  };
-
- 
-
-
+//recupère les taches dans le localStorage
   useEffect(() => {
 		const data = JSON.parse(localStorage.getItem('todos'));
 		if (data) {
@@ -122,6 +108,8 @@ const filteredTasks = filterTasks(todos, filterStatus);
 		}
 	}, []);
 
+
+  //sauvegarde les tache dans le localStorage
   useEffect(() => {
 		localStorage.setItem('todos', JSON.stringify(todos));
 	}, [todos]);
@@ -136,10 +124,19 @@ const filteredTasks = filterTasks(todos, filterStatus);
   return (
     <div className="m-auto px-4 col-12 col-sm-10 col-lg-6">
       <form onSubmit={handleSubmit} className="form-row align-items-center mb-3">
-        
-      <h4 className="date">
-					<div>{`${Today},`} {`${day} ${month}`}</div>
+      <div class="date"> 
+      <h4 >
+					{`${Today},`} {`${day} ${month}`}
           </h4>
+          </div>
+         <div class="select-wrapper">
+          <div  id='status'>
+           <select  value={filterStatus} onChange={handleUpdateFilter}>
+          <option value="all" >Toutes les tâches</option>
+          <option value="completed"  >Complet</option>
+          <option value="incomplete"  >Incomplet  </option>
+        </select>
+        </div>
         <label id='todo'htmlFor="todo" className="form-label mt-3">
           <input 
             type="text"
@@ -151,14 +148,11 @@ const filteredTasks = filterTasks(todos, filterStatus);
           />
           
         </label>
+        </div>
         <button id='btn-create'type="submit" class="mt-2 btn d-block">
           {editingIndex === null ? 'Créer' : 'Modifier'}
         </button>
-        <select id='status' value={filterStatus} onChange={handleUpdateFilter}>
-          <option value="all">Toutes les tâches</option>
-          <option value="completed">Complet</option>
-          <option value="incomplete">Incomplet  </option>
-        </select>
+       
         {editingIndex !== null && (
           
         
@@ -168,25 +162,12 @@ const filteredTasks = filterTasks(todos, filterStatus);
             onClick={() => setEditingIndex(null)}
          
           >
-            Annuler         
+            <BiUndo/>         
           </button>
         )}
         
-      </form>
-      <form onSubmit={handleSearch}   >
-      <input type="text"
-          placeholder="Recherche de tâche"
-          value={searchItem}
-          onChange={handleSearch} />
-      <button id='btn-search' type="submit" class="mt-2 btn d-block">
-           Recherche de Tâche
-        </button>
-        </form>
-        
-        <button onClick={handleShowCompleted}>
-  {showCompleted ? 'Masquer les tâches terminées' : 'Voir les tâches terminées'}
-</button>
-
+      </form>     
+<div>
         
       <h2>Liste des choses a faire:</h2>
       <ul className="list-group">
@@ -234,7 +215,7 @@ const filteredTasks = filterTasks(todos, filterStatus);
               type="button"
               onClick={() => handleComplete(index)}
             >
-              {!todos.completed  ? (<FiCircle/>):(<IoIosCheckmarkCircle className={todos.completed ? 'icone-done' : ''}/>)/*'Non validée' : '✅'*/}
+              {!todos.completed  ? (<FiCircle/>):(<IoIosCheckmarkCircle className={todos.completed ? 'icone-done' : ''}/>)}
             </button>
           </>
         )}
@@ -242,6 +223,7 @@ const filteredTasks = filterTasks(todos, filterStatus);
     ))}
   </ul>
  
+</div>
 </div>
 );
 };

@@ -1,0 +1,32 @@
+<div class="container">
+    <h1>Tâches de {{ user?.name }}</h1>
+  
+    <h3>{{ user?.name }}</h3>
+    <p>{{ user?.email }}</p>
+  
+    <label>
+      <input type="checkbox" [(ngModel)]="showCompletedTasks">
+      Afficher les tâches terminées
+    </label>
+  
+    <div class="tasks-list">
+      <h4>Tâches en cours:</h4>
+      <ul>
+        <li *ngFor="let task of tasks" [hidden]="task.completed && !showCompletedTasks">
+          {{ task.title }}
+        </li>
+      </ul>
+    </div>
+  
+    <div class="tasks-list">
+      <h4>Tâches terminées:</h4>
+      <ul>
+        <li *ngFor="let task of tasks" [hidden]="!task.completed || !showCompletedTasks">
+          {{ task.title }}
+        </li>
+      </ul>
+    </div>
+  
+    <button class="btn btn-primary" (click)="addTask({ title: 'Nouvelle tâche', completed: false })">Ajouter une tâche</button>
+  </div>
+  
